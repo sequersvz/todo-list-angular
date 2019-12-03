@@ -1,0 +1,13 @@
+<form>
+    <div class="input-group">
+        <input type="text" name="todoInput" class="form-control" placeholder="add todo" aria-label="add todo"
+            [(ngModel)]="inputValue"
+            [value]="editValue ? editValue.task : inputValue"
+        >
+        <div class="input-group-append">
+          <button class="btn btn-primary" type="submit"
+        (click)="onSubmit()"
+          >Submit</button>
+        </div>
+    </div>
+</form>
