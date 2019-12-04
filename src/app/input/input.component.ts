@@ -1,6 +1,6 @@
 import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 
-import {todoItem} from '../app.component'
+import {TodoItem} from '../app.component';
 
 @Component({
   selector: 'app-input',
@@ -8,21 +8,21 @@ import {todoItem} from '../app.component'
   styleUrls: ['./input.component.css']
 })
 export class InputComponent implements OnInit {
-  inputValue: string
-  @Output() inputEvent = new EventEmitter<string>()
-  @Input() editValue : todoItem
+  inputValue: string;
+  @Output() inputEvent = new EventEmitter<string>();
+  @Input() editValue: TodoItem;
 
-  constructor() { 
-    this.inputValue = ''
+  constructor() {
+    this.inputValue = '';
   }
 
   ngOnInit() {
   }
 
-  onSubmit(){
-    if(this.inputValue.length >= 1){
-      this.inputEvent.emit(this.inputValue)
-      this.inputValue = ''
+  onSubmit() {
+    if (this.inputValue.length >= 1) {
+      this.inputEvent.emit(this.inputValue);
+      this.inputValue = '';
     }
   }
 

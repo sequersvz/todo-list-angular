@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 
-export interface todoItem {
-  id: number,
-  task: string,
-  date: string
+export interface TodoItem {
+  id: number;
+  task: string;
+  date: string;
 }
 
 
@@ -14,36 +14,36 @@ export interface todoItem {
 })
 
 export class AppComponent {
-  staticId: number = 1
-  tasksArray : Array<todoItem> = []
-  editValue : todoItem
+  staticId = 1;
+  tasksArray: Array<TodoItem> = [];
+  editValue: TodoItem;
 
 
-  addTask(task: string){
-    let taskItem = {
+  addTask(task: string) {
+    const taskItem = {
       id: this.staticId++,
       task,
       date: new Date().toLocaleString()
-   }
-   this.tasksArray = [...this.tasksArray, taskItem]
+   };
+    this.tasksArray = [...this.tasksArray, taskItem];
   }
 
-  actionToDo(param: {action: string, id: number}){
-    let funcToDo = {
+  actionToDo(param: {action: string, id: number}) {
+    const funcToDo = {
       done: (id: number) => {
-        this.tasksArray = this.tasksArray.filter(e => e.id !== id)
+        this.tasksArray = this.tasksArray.filter(e => e.id !== id);
       },
       delete: (id: number) => {
-        this.tasksArray = this.tasksArray.filter(e => e.id !== id)
+        this.tasksArray = this.tasksArray.filter(e => e.id !== id);
       },
       edit: (id: number) => {
-        this.editValue =  this.tasksArray.filter(e => e.id === id)[0]
-        this.tasksArray = this.tasksArray.filter(e => e.id !== id)
+        this.editValue =  this.tasksArray.filter(e => e.id === id)[0];
+        this.tasksArray = this.tasksArray.filter(e => e.id !== id);
       }
-    }
+    };
 
-    if(funcToDo.hasOwnProperty(param.action)){
-      funcToDo[param.action](param.id)
+    if (funcToDo.hasOwnProperty(param.action)) {
+      funcToDo[param.action](param.id);
     }
 
   }
