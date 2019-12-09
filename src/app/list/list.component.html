@@ -13,9 +13,8 @@
                         <td>{{task.task}}</td>
                         <td>{{task.date}}</td>
                         <td>
-                            <button type="button" class="btn btn-success" (click)="onDone(task.id)">Done!</button>
+                            <button type="button" class="btn btn-success mr-3" (click)="onDone(task.id)">Done!</button>
                             <button type="button" class="btn btn-warning" (click)="onEdit(task.id)">Edit</button>
-                            <button type="button" class="btn btn-danger" (click)="onDelete(task.id)">Delete</button>
                         </td>
                 </tr> 
         </tbody>

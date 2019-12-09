@@ -6,7 +6,8 @@
         >
         <div class="input-group-append">
           <button class="btn btn-primary" type="submit"
-        (click)="onSubmit()"
+          [disabled]="inputValue.length === 0"
+          (click)="onSubmit()"
           >Submit</button>
         </div>
     </div>

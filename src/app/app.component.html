@@ -6,7 +6,7 @@
       [editValue]="editValue"
       ></app-input>
     </div>
-    <div class="col-12">
+    <div class="col-12" *ngIf="tasksArray.length > 0">
       <app-list 
       [listArray]="tasksArray"
       (actionEv)="actionToDo($event)"

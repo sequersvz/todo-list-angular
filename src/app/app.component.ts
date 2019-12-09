@@ -1,10 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, DoCheck } from '@angular/core';
 
-export interface TodoItem {
-  id: number;
-  task: string;
-  date: string;
-}
+import {TodoItem} from './model/item.model';
+import { ListService } from './services/list.service';
 
 
 @Component({
@@ -13,37 +10,37 @@ export interface TodoItem {
   styleUrls: ['./app.component.css']
 })
 
-export class AppComponent {
-  staticId = 1;
-  tasksArray: Array<TodoItem> = [];
+export class AppComponent implements OnInit, DoCheck {
+  test = 1;
+  tasksArray: TodoItem[];
   editValue: TodoItem;
 
+  constructor(private listService: ListService) {}
 
-  addTask(task: string) {
-    const taskItem = {
-      id: this.staticId++,
-      task,
-      date: new Date().toLocaleString()
-   };
-    this.tasksArray = [...this.tasksArray, taskItem];
+  ngOnInit(): void {
+    this.onGetList();
   }
 
-  actionToDo(param: {action: string, id: number}) {
-    const funcToDo = {
-      done: (id: number) => {
-        this.tasksArray = this.tasksArray.filter(e => e.id !== id);
-      },
-      delete: (id: number) => {
-        this.tasksArray = this.tasksArray.filter(e => e.id !== id);
-      },
-      edit: (id: number) => {
-        this.editValue =  this.tasksArray.filter(e => e.id === id)[0];
-        this.tasksArray = this.tasksArray.filter(e => e.id !== id);
-      }
-    };
+  ngDoCheck(): void {
+    if (this.tasksArray.length !== this.listService.TodoList.length) {
+      this.onGetList();
+      console.log(this.test++);
+    }
+  }
 
-    if (funcToDo.hasOwnProperty(param.action)) {
-      funcToDo[param.action](param.id);
+  private onGetList(): void {
+    this.tasksArray = this.listService.getList();
+  }
+
+
+  public addTask(task: string): void {
+    this.listService.add(task);
+  }
+
+  public actionToDo(param: {action: string, id: number}) {
+
+    if (param.action === 'done') {this.listService.done(param.id); } else {
+      this.editValue = this.listService.edit(param.id);
     }
 
   }

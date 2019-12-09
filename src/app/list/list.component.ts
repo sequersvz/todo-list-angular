@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
-import {todoItem} from '../app.component';
+import {TodoItem} from '../model/item.model';
 
 @Component({
   selector: 'app-list',
@@ -8,7 +8,7 @@ import {todoItem} from '../app.component';
   styleUrls: ['./list.component.css']
 })
 export class ListComponent implements OnInit {
-  @Input() listArray: Array<todoItem>;
+  @Input() listArray: TodoItem[];
   @Output() actionEv = new EventEmitter<{action: string, id: number}>();
 
   constructor() { }
@@ -16,16 +16,12 @@ export class ListComponent implements OnInit {
   ngOnInit() {
   }
 
-  onEdit(id: number) {
+  public onEdit(id: number) {
     this.actionEv.emit({action: 'edit', id});
   }
 
-  onDone(id: number) {
+  public onDone(id: number) {
     this.actionEv.emit({action: 'done', id});
-  }
-
-  onDelete(id: number) {
-    this.actionEv.emit({action: 'delete', id});
   }
 
 }
