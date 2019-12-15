@@ -3,3 +3,8 @@ export interface TodoItem {
     task: string;
     date: string;
 }
+
+export interface ActionEvObj {
+    action: string;
+    id: number;
+}

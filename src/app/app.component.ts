@@ -1,6 +1,6 @@
 import { Component, OnInit, DoCheck } from '@angular/core';
 
-import {TodoItem} from './model/item.model';
+import {TodoItem, ActionEvObj} from './model/item.model';
 import { ListService } from './services/list.service';
 
 
@@ -11,7 +11,6 @@ import { ListService } from './services/list.service';
 })
 
 export class AppComponent implements OnInit, DoCheck {
-  test = 1;
   tasksArray: TodoItem[];
   editValue: TodoItem;
 
@@ -24,7 +23,6 @@ export class AppComponent implements OnInit, DoCheck {
   ngDoCheck(): void {
     if (this.tasksArray.length !== this.listService.TodoList.length) {
       this.onGetList();
-      console.log(this.test++);
     }
   }
 
@@ -37,11 +35,9 @@ export class AppComponent implements OnInit, DoCheck {
     this.listService.add(task);
   }
 
-  public actionToDo(param: {action: string, id: number}) {
+  public actionToDo(param: ActionEvObj): void {
 
-    if (param.action === 'done') {this.listService.done(param.id); } else {
-      this.editValue = this.listService.edit(param.id);
-    }
+    param.action === 'done' ? this.listService.done(param.id) : (this.editValue = this.listService.edit(param.id));
 
   }
 }

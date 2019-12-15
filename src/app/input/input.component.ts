@@ -1,7 +1,6 @@
 import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 
 import {TodoItem} from '../model/item.model';
-import {ListService} from '../services/list.service';
 
 @Component({
   selector: 'app-input',
@@ -9,17 +8,17 @@ import {ListService} from '../services/list.service';
   styleUrls: ['./input.component.css']
 })
 export class InputComponent implements OnInit {
-  inputValue: string;
   @Output() inputEvent = new EventEmitter<string>();
   @Input() editValue: TodoItem;
+  inputValue: string;
 
-  constructor(private listService: ListService) {}
+  constructor() {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.inputValue = '';
   }
 
-  public onSubmit() {
+  public onSubmit(): void {
     if (this.inputValue.length >= 1) {
       this.inputEvent.emit(this.inputValue);
       this.inputValue = '';
