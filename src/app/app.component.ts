@@ -10,7 +10,7 @@ import { ListService } from './services/list.service';
   styleUrls: ['./app.component.css']
 })
 
-export class AppComponent implements OnInit, DoCheck {
+export class AppComponent implements OnInit {
   tasksArray: TodoItem[];
   editValue: TodoItem;
 
@@ -18,12 +18,10 @@ export class AppComponent implements OnInit, DoCheck {
 
   ngOnInit(): void {
     this.onGetList();
-  }
-
-  ngDoCheck(): void {
-    if (this.tasksArray.length !== this.listService.TodoList.length) {
-      this.onGetList();
-    }
+    this.listService.listEvent.subscribe((listItem: TodoItem[]) => {
+      console.log(listItem);
+      this.tasksArray = listItem;
+    });
   }
 
   private onGetList(): void {
@@ -36,8 +34,6 @@ export class AppComponent implements OnInit, DoCheck {
   }
 
   public actionToDo(param: ActionEvObj): void {
-
     param.action === 'done' ? this.listService.done(param.id) : (this.editValue = this.listService.edit(param.id));
-
   }
 }

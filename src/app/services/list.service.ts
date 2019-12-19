@@ -1,8 +1,9 @@
-// import { Injectable } from '@angular/core';
+import { EventEmitter } from '@angular/core';
 import {TodoItem} from '../model/item.model';
 
 
 export class ListService {
+  public listEvent = new EventEmitter<TodoItem[]>();
   public TodoList: TodoItem[] = [
     {
       id: 1,
@@ -18,21 +19,24 @@ export class ListService {
 
   public add(task: string): void {
 
-  this.TodoList = [...this.TodoList, {
-    id: this.staticId++,
-    task,
-    date: new Date().toLocaleString()
-  }];
+  this.TodoList.push({
+      id: this.staticId++,
+      task,
+      date: new Date().toLocaleString()
+    });
 
+  this.listEvent.emit(this.TodoList);
 }
 
   public done(id: number): void {
     this.TodoList = this.TodoList.filter(e => e.id !== id);
+    this.listEvent.emit(this.TodoList);
   }
 
   public edit(id: number): TodoItem {
     const valToEdit = this.TodoList.filter(e => e.id === id)[0];
     this.TodoList = this.TodoList.filter(e => e.id !== id);
+    this.listEvent.emit(this.TodoList);
     return valToEdit;
   }
 
