@@ -1,9 +1,10 @@
-import { EventEmitter } from '@angular/core';
+
 import {TodoItem} from '../model/item.model';
+import { Subject } from 'rxjs';
 
 
 export class ListService {
-  public listEvent = new EventEmitter<TodoItem[]>();
+  public listEvent = new Subject<TodoItem[]>();
   public TodoList: TodoItem[] = [
     {
       id: 1,
@@ -25,18 +26,18 @@ export class ListService {
       date: new Date().toLocaleString()
     });
 
-  this.listEvent.emit(this.TodoList);
+  this.listEvent.next(this.TodoList);
 }
 
   public done(id: number): void {
     this.TodoList = this.TodoList.filter(e => e.id !== id);
-    this.listEvent.emit(this.TodoList);
+    this.listEvent.next(this.TodoList);
   }
 
   public edit(id: number): TodoItem {
     const valToEdit = this.TodoList.filter(e => e.id === id)[0];
     this.TodoList = this.TodoList.filter(e => e.id !== id);
-    this.listEvent.emit(this.TodoList);
+    this.listEvent.next(this.TodoList);
     return valToEdit;
   }
 
